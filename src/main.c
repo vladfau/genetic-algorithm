@@ -5,16 +5,19 @@
 #include "population.h"
 
 int main() {
-    printf("Builds\n");
     srand(time(NULL));
-/**	cfg_t a = {0};
-	configureGA(&a);
-	printf("Initial population: %d\nCrossing point: %d\nUniform rate: %f\nMutation rate: %f\n", a.initialPopulation, a.crossingPoint, a.uniformRate, a.mutationRate);
-    **/
-    population p = createPopulation(20);
-    for (uint8_t i = 0; i < 20;i++) {
-        print_str(p[i].genes);
-        printf("\n");
+    cfg_t cfg = {0};
+    configureGA(&cfg);
+    printf("Initial population: %d\nUniform rate: %f\nMutation rate: %f\n"
+            , cfg.initialPopulation
+            , cfg.uniformRate
+            , cfg.mutationRate);
+    // TODO: move to environment variable
+    genome g = "00011010001100111111";
+    population p = createPopulation(cfg.initialPopulation);
+    for (uint8_t i = 0; i < cfg.initialPopulation; i++) {
+        calcFitness(&p[i], g);
+        printf("%s (fit: %d)\n", p[i].genes, p[i].fitnessValue);
     }
-	return 0;
+    return 0;
 }
