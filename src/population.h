@@ -1,11 +1,7 @@
 #pragma once
 #include <malloc.h>
-#include <inttypes.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
 
+#include "util.h"
 #include "env.h"
 
 #define MAX_GENOME 20
