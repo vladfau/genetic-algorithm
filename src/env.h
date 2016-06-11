@@ -5,6 +5,7 @@ struct inputCfg {
     uint16_t initialPopulation;
     float uniformRate;
     float mutationRate;
+    char targetGenome[MAX_GENOME];
 };
 
 typedef struct inputCfg cfg_t;

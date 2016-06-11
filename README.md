@@ -13,7 +13,7 @@ To compile and run:
 
 Environment variables:
 
-* `TG` - target genome to resolve (max length is in `MAX_GENOME` in `population.h`)
+* `TG` - target genome to resolve (max length is in `MAX_GENOME` in `util.h`)
 * `IP` - initial population: how many individuals to start with
 * `UR` - uniform rate: chance to take father's or mother's gene
 * `MR` - mutation rate: chance for random mutation

@@ -11,7 +11,7 @@ void getFromEnv(const char * variable, char * result, int bufSize) {
 }
 
 void configureGA(cfg_t * config){
-    const char * vars[] = {"IP", "UR", "MR"};
+    const char * vars[] = {"IP", "UR", "MR", "TG"};
 
     char _popSize[20];
     getFromEnv(vars[0], _popSize, sizeof(_popSize));
@@ -24,5 +24,9 @@ void configureGA(cfg_t * config){
     char _mutationRate[40];
     getFromEnv(vars[2], _mutationRate, sizeof(_mutationRate));
     sscanf(_mutationRate, "%f" , &config->mutationRate);
+
+    char _targetGenome[MAX_GENOME + 1];
+    getFromEnv(vars[3], _targetGenome, sizeof(_popSize));
+    memcpy(&config->targetGenome, _targetGenome, strlen(_targetGenome));
 }
 

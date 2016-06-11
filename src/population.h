@@ -4,7 +4,6 @@
 #include "util.h"
 #include "env.h"
 
-#define MAX_GENOME 20
 
 typedef char * genome;
 
