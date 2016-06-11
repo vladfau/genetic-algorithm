@@ -3,7 +3,7 @@
 
 individual createIndividual() {
     individual ind;
-    char *g;
+    char * g;
     g = malloc(sizeof(char) * MAX_GENOME + 1);
     for (uint8_t i = 0; i < MAX_GENOME; i++)
         if (rand() & 1) g[i] = '1'; else g[i] = '0';

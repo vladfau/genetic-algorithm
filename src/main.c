@@ -12,8 +12,11 @@ int main() {
             , cfg.initialPopulation
             , cfg.uniformRate
             , cfg.mutationRate);
-    // TODO: move to environment variable
-    genome g = "00011010001100111111";
+
+    genome g[MAX_GENOME];
+    getFromEnv("TG", g, MAX_GENOME);
+
+    printf("Target Genome: %s\n", g);
     population p = createPopulation(cfg.initialPopulation);
     for (uint8_t i = 0; i < cfg.initialPopulation; i++) {
         calcFitness(&p[i], g);
