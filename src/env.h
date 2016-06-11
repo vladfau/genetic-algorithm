@@ -6,7 +6,6 @@
 
 struct inputCfg {
     uint16_t initialPopulation;
-    uint16_t crossingPoint;
     float uniformRate;
     float mutationRate;
 };
