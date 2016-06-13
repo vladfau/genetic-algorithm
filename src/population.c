@@ -1,5 +1,13 @@
 #include "population.h"
 
+uint8_t randr(uint8_t min, uint8_t max) {
+    double scaled = (double)rand()/RAND_MAX;
+    return (max - min + 1) * scaled + min;
+}
+
+char inverse(char ch) {
+    return (ch == '1')? '0':'1';
+}
 
 individual * createIndividual() {
     individual * ind = (individual *) malloc(sizeof(individual));
@@ -23,6 +31,15 @@ population createPopulation(uint16_t size) {
     return newP;
 }
 
+void mutate(individual * ind, float mutationRate) {
+    float a = 1.0;
+    float chance = (float)rand()/(float)(RAND_MAX/a);
+    for (uint8_t i = 0; i < MAX_GENOME; i++)
+        if (chance <= mutationRate) {
+            uint8_t mutatedGene = randr(0, MAX_GENOME - 1);
+            ind->genes[mutatedGene] = inverse(ind->genes[mutatedGene]);
+        }
+}
 
 void getFittest(population pop, individual * best, uint8_t populationSize) {
     uint16_t bestFV = pop[0]->fitnessValue;
@@ -44,4 +61,3 @@ void calcFitness(individual * ind, genome g) {
 
     ind->fitnessValue = _ind ^ _gen;
 }
-

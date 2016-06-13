@@ -19,8 +19,12 @@ int main() {
         calcFitness(p[i], cfg.targetGenome);
         printf("%s (fit: %d)\n", p[i]->genes, p[i]->fitnessValue);
     }
-    individual ind;;
+    individual ind;
     getFittest(p, &ind, cfg.initialPopulation);
     printf("fittet: %s (fit: %d)\n", ind.genes, ind.fitnessValue);
+
+    for (int i = 0; i < 100; i++)
+    mutate(&ind, 0.05);
+
     return 0;
 }
