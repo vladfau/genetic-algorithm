@@ -1,5 +1,6 @@
 #pragma once
 #include <malloc.h>
+#include <stdbool.h>
 
 #include "util.h"
 #include "env.h"
@@ -15,9 +16,9 @@ struct ind {
 typedef struct ind individual;
 typedef individual ** population;
 
-individual * createIndividual();
+individual * createIndividual(bool generate);
 
-population createPopulation(uint16_t size);
+population createPopulation(uint16_t size, bool generate);
 
 void evolve(population * pop,
         cfg_t * config,

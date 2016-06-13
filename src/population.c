@@ -1,41 +1,43 @@
 #include "population.h"
 
-uint8_t randr(uint8_t min, uint8_t max) {
-    double scaled = (double)rand()/RAND_MAX;
-    return (max - min + 1) * scaled + min;
-}
-
-char inverse(char ch) {
-    return (ch == '1')? '0':'1';
-}
-
-individual * createIndividual() {
+individual * createIndividual(bool generate) {
     individual * ind = (individual *) malloc(sizeof(individual));
     char * g;
     g = malloc(sizeof(char) * MAX_GENOME + 1);
-    for (uint8_t i = 0; i < MAX_GENOME; i++)
-        if (rand() & 1) g[i] = '1'; else g[i] = '0';
+
+    if (generate)
+        for (uint8_t i = 0; i < MAX_GENOME; i++)
+            if (rand() & 1) g[i] = '1'; else g[i] = '0';
+
     g[MAX_GENOME] = '\0';
     ind->genes = g;
     return ind;
 }
 
-population createPopulation(uint16_t size) {
+population createPopulation(uint16_t size, bool generate) {
     population newP = malloc(sizeof(individual * ) * size);
-    for (uint16_t i = 0; i < size; i++) {
-        individual * ind = createIndividual();
-        printf("create individual @ %d\n", ind->genes, ind);
-        newP[i] = ind;
-    }
+
+    if (generate)
+        for (uint16_t i = 0; i < size; i++) {
+            individual * ind = createIndividual(true);
+            printf("create individual @ %d\n", ind->genes, ind);
+            newP[i] = ind;
+        }
 
     return newP;
 }
+void crossover(individual * father,
+        individual * mother,
+        individual * child,
+        float uniformRate) {
+    for (uint8_t i = 0; i < MAX_GENOME; i++)
+        child->genes[i] = (getChance() <= uniformRate)? mother->genes[i]: father->genes[i];
+}
+
 
 void mutate(individual * ind, float mutationRate) {
-    float a = 1.0;
-    float chance = (float)rand()/(float)(RAND_MAX/a);
     for (uint8_t i = 0; i < MAX_GENOME; i++)
-        if (chance <= mutationRate) {
+        if (getChance() <= mutationRate) {
             uint8_t mutatedGene = randr(0, MAX_GENOME - 1);
             ind->genes[mutatedGene] = inverse(ind->genes[mutatedGene]);
         }
