@@ -13,9 +13,9 @@ struct ind {
 };
 
 typedef struct ind individual;
-typedef individual * population;
+typedef individual ** population;
 
-individual createIndividual();
+individual * createIndividual();
 
 population createPopulation(uint16_t size);
 
@@ -35,8 +35,8 @@ void crossover(individual * father,
 void mutate(individual * ind,
         float mutationRate);
 
-void getFittest(population * pop,
-        genome * g,
-        individual * best);
+void getFittest(population pop,
+        individual * best,
+        uint8_t populationSize);
 
 void calcFitness(individual * ind, genome g);

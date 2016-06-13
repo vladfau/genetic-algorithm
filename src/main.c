@@ -16,8 +16,11 @@ int main() {
 
     population p = createPopulation(cfg.initialPopulation);
     for (uint8_t i = 0; i < cfg.initialPopulation; i++) {
-        calcFitness(&p[i], cfg.targetGenome);
-        printf("%s (fit: %d)\n", p[i].genes, p[i].fitnessValue);
+        calcFitness(p[i], cfg.targetGenome);
+        printf("%s (fit: %d)\n", p[i]->genes, p[i]->fitnessValue);
     }
+    individual ind;;
+    getFittest(p, &ind, cfg.initialPopulation);
+    printf("fittet: %s (fit: %d)\n", ind.genes, ind.fitnessValue);
     return 0;
 }
