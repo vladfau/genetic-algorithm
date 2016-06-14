@@ -26,7 +26,7 @@ void configureGA(cfg_t * config){
     sscanf(_mutationRate, "%f" , &config->mutationRate);
 
     char _targetGenome[MAX_GENOME + 1];
-    getFromEnv(vars[3], _targetGenome, sizeof(_popSize));
+    getFromEnv(vars[3], _targetGenome, sizeof(_targetGenome));
     memcpy(&config->targetGenome, _targetGenome, strlen(_targetGenome));
 }
 

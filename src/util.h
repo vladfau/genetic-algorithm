@@ -4,7 +4,7 @@
 #include <string.h>
 #include <inttypes.h>
 
-#define MAX_GENOME 60
+#define MAX_GENOME 40
 #define TOURNAMENT_SIZE 5
 uint8_t randr(uint8_t min, uint8_t max);
 
