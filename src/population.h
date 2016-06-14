@@ -20,12 +20,14 @@ individual * createIndividual(bool generate);
 
 population createPopulation(uint16_t size, bool generate);
 
-void evolve(population * pop,
+void evolve(population pop,
         cfg_t * config,
+        individual * winner,
         uint16_t counter);
 
-void tournament(population * ancestors,
-        population * successors,
+void tournament(population pop,
+        individual * winner,
+        uint16_t populationSize,
         uint16_t tournamentSize);
 
 void crossover(individual * father,

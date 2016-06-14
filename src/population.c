@@ -7,7 +7,7 @@ individual * createIndividual(bool generate) {
 
     if (generate)
         for (uint8_t i = 0; i < MAX_GENOME; i++)
-            if (rand() & 1) g[i] = '1'; else g[i] = '0';
+            g[i] = (rand() & 1)? '1': '0';
 
     g[MAX_GENOME] = '\0';
     ind->genes = g;
@@ -20,12 +20,49 @@ population createPopulation(uint16_t size, bool generate) {
     if (generate)
         for (uint16_t i = 0; i < size; i++) {
             individual * ind = createIndividual(true);
-            printf("create individual @ %d\n", ind->genes, ind);
+            printf("create individual @ %d\n", ind);
             newP[i] = ind;
         }
 
     return newP;
+
 }
+void evolve(population pop,
+        cfg_t * config,
+        individual * winner,
+        uint16_t counter) {
+    population children = createPopulation(config->initialPopulation, false);
+
+    for (uint16_t i = 0; i < config->initialPopulation; i++) {
+        children[i] = createIndividual(false);
+        individual * father = createIndividual(false);
+        individual * mother = createIndividual(false);
+        do {
+            tournament(pop, father, config->initialPopulation, TOURNAMENT_SIZE);
+            tournament(pop, mother, config->initialPopulation, TOURNAMENT_SIZE);
+        } while (father == mother);
+        crossover(father, mother, children[i], config->uniformRate);
+        mutate(children[i], config->mutationRate);
+        calcFitness(children[i], config->targetGenome);
+    }
+
+    getFittest(children, winner, config->initialPopulation);
+    printf("Best in generation %d is %d\n", counter, winner->fitnessValue);
+    if (winner->fitnessValue) evolve(children, config, winner, ++counter);
+}
+
+void tournament(population pop,
+        individual * winner,
+        uint16_t populationSize,
+        uint16_t tournamentSize) {
+    population cs = createPopulation(tournamentSize, false);
+    for (uint16_t i = 0; i < tournamentSize; i++) {
+        uint16_t cId = rand() % populationSize;
+        cs[i] =  pop[cId];
+    }
+    getFittest(cs, winner, tournamentSize);
+}
+
 void crossover(individual * father,
         individual * mother,
         individual * child,
